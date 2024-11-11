@@ -1,0 +1,35 @@
+{
+	"name": "discord-bot-template",
+	"version": "0.0.1",
+	"main": "index.ts",
+	"scripts": {
+		"start": "ts-node -r tsconfig-paths/register src/app/index.ts",
+		"lint": "eslint .",
+		"debug": "node --max-old-space-size=2048 --expose-gc --inspect -r tsconfig-paths/register -r ts-node/register src/app/index.ts",
+		"dexDebug": "dexnode -r tsconfig-paths/register -r ts-node/register src/app/index.ts"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	},
+	"keywords": [],
+	"author": "Rollphes",
+	"license": "ISC",
+	"dependencies": {
+		"discord-interaction-binder": "^0.0.8",
+		"discord.js": "^14.16.3",
+		"path": "^0.12.7",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3"
+	},
+	"devDependencies": {
+		"@types/node": "^22.9.0",
+		"@typescript-eslint/eslint-plugin": "^8.13.0",
+		"@typescript-eslint/parser": "^8.13.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"prettier": "^3.3.3",
+		"tsconfig-paths": "^4.2.0"
+	}
+}
