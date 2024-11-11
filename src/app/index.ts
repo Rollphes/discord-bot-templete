@@ -33,6 +33,12 @@ client.on('interactionCreate', (interaction) => {
     try {
       await client.interactions.execute(interaction)
     } catch (err) {
+      console.error('Error while executing interaction:')
+      if (interaction.isCommand() || interaction.isAutocomplete())
+        console.error('commandName:', interaction.commandName)
+      if (interaction.isMessageComponent() || interaction.isModalSubmit())
+        console.error('customId:', interaction.customId)
+
       if (
         !(err instanceof HTTPError && err.message === 'Service Unavailable') &&
         !(
