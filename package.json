@@ -15,7 +15,7 @@
 	"author": "Rollphes",
 	"license": "ISC",
 	"dependencies": {
-		"discord-interaction-binder": "^0.0.8",
+		"discord-interaction-binder": "^0.0.10",
 		"discord.js": "^14.16.3",
 		"path": "^0.12.7",
 		"ts-node": "^10.9.2",

@@ -23,6 +23,7 @@ const client = new Client(options)
 client.on('ready', () => {
   void (async (): Promise<void> => {
     console.log('--- Bot is ready ---')
+    await client.interactions.clearCommands(env.GUILD_ID)
     await loadCommands(client, join(__dirname, 'commands'), env.GUILD_ID)
     await client.modules.init(join(__dirname, 'modules'))
     console.log('--  Bot successfully started --')
