@@ -5,7 +5,7 @@ import { join, relative } from 'path'
 import { BaseModule } from '@/app/modules/BaseModule'
 
 type NodeModule = {
-  default?: typeof BaseModule
+  default?: new (client: Client) => BaseModule
 }
 
 export class ModuleManager {
@@ -34,7 +34,7 @@ export class ModuleManager {
               )
             }
 
-            const moduleName = module.default.prototype.constructor.name
+            const moduleName = module.default.name
             this.modules.set(moduleName, new module.default(this.client))
             await this.modules.get(moduleName)?.init()
             console.log('✅️ :', moduleName)
