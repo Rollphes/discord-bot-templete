@@ -1,9 +1,8 @@
-import { ClientOptions, DiscordAPIError, HTTPError } from 'discord.js'
-import { join } from 'path'
+import { Client, ClientOptions, DiscordAPIError, HTTPError } from 'discord.js'
+import { ModuleManager } from 'mopo-discordjs'
+import path from 'path'
 
-import { Client } from '@/app/Client'
 import { env } from '@/utils/env'
-import { loadCommands } from '@/utils/loadCommands'
 
 const options: ClientOptions = {
   intents: [
@@ -20,19 +19,16 @@ const options: ClientOptions = {
   rest: { timeout: 60000 },
 }
 const client = new Client(options)
-client.on('ready', () => {
-  void (async (): Promise<void> => {
-    console.log('--- Bot is ready ---')
-    await client.interactions.clearCommands(env.GUILD_ID)
-    await loadCommands(client, join(__dirname, 'commands'), env.GUILD_ID)
-    await client.modules.init(join(__dirname, 'modules'))
-    console.log('--  Bot successfully started --')
-  })()
-})
+const moduleManager = new ModuleManager(
+  client,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  async (fileUrl) => await import(fileUrl),
+)
+
 client.on('interactionCreate', (interaction) => {
   void (async (): Promise<void> => {
     try {
-      await client.interactions.execute(interaction)
+      await moduleManager.interactionExecute(interaction)
     } catch (err) {
       console.error('Error while executing interaction:')
       if (interaction.isCommand() || interaction.isAutocomplete())
@@ -50,6 +46,17 @@ client.on('interactionCreate', (interaction) => {
         throw err
       console.error(err)
     }
+  })()
+})
+
+client.on('ready', () => {
+  void (async (): Promise<void> => {
+    console.log('--- Bot is ready ---')
+    console.log('--- [1/2]Clearing commands ---')
+    await moduleManager.clearCommands(env.GUILD_ID)
+    console.log('--- [2/2]Initializing modules ---')
+    await moduleManager.init(path.join(__dirname), env.GUILD_ID)
+    console.log('--  Bot successfully started --')
   })()
 })
 void client.login(env.BOT_TOKEN)
