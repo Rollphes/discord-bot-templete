@@ -35,4 +35,4 @@ export default {
       content: 'Success!!',
     })
   },
-} as const satisfies ComponentData<undefined>
+} as const satisfies ComponentData

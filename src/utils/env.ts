@@ -1,3 +1,4 @@
+import 'dotenv/config'
 const envList = {
   BOT_TOKEN: process.env.BOT_TOKEN,
   GUILD_ID: process.env.GUILD_ID,
@@ -18,5 +19,5 @@ function checkEnv(): void {
 }
 checkEnv()
 export const env = Object.fromEntries(
-  Object.entries(envList).map(([key, value]) => [key, value as string]),
+  Object.entries(envList).map(([key, value]) => [key, value ?? '']),
 ) as { [key in keyof typeof envList]: string }

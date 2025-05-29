@@ -10,6 +10,7 @@
 google-credentials.json
 
 .envrc
+.env
 
 ## ignore all .env files
 *.csv
