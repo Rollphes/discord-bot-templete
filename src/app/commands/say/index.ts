@@ -5,7 +5,7 @@ import SayCommandModal from '@/app/commands/say/components/SayCommandModal'
 
 export default {
   name: 'say',
-  description: 'パイモンで発言',
+  description: 'BOTで発言',
   defaultMemberPermissions: PermissionFlagsBits.Administrator,
   options: [
     {
